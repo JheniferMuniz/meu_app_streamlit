@@ -1,53 +1,38 @@
 import streamlit as st
-
-st.set_page_config(page_title="Controle de Parcelas", page_icon="🚗")
-
-st.title("🚗 Controle de Parcelas de Carros")
-
-# Carro 1 - Pagamento semanal
-st.header("Carro 1 - Pagamento semanal")
-nome1 = st.text_input("Nome do carro 1", "Fiat Uno")
-valor_total1 = st.number_input("Valor total (€)", min_value=0.0)
-valor_pago1 = st.number_input("Valor já pago (€)", min_value=0.0)
-restante1 = valor_total1 - valor_pago1
-st.success(f"Falta pagar: € {restante1:.2f}")
-
-# Carro 2 - Pagamento mensal
-st.header("Carro 2 - Pagamento mensal")
-nome2 = st.text_input("Nome do carro 2", "Opel Corsa")
-valor_total2 = st.number_input("Valor total (€) do segundo carro", min_value=0.0)
-valor_pago2 = st.number_input("Valor já pago (€)", min_value=0.0, key="carro2")
-restante2 = valor_total2 - valor_pago2
-st.success(f"Falta pagar: € {restante2:.2f}")
-import streamlit as st
 from datetime import date
 
-st.title("🚗 Controle de Parcelas de Carros")
+st.set_page_config(page_title="Controle de Parcelas de Carros", page_icon="🚗", layout="centered")
 
+st.markdown("# 🚗 Controle de Parcelas de Carros")
+
+# -------------------------
+# Carro 1 - Pagamento semanal
+# -------------------------
 st.header("Carro 1 - Pagamento semanal")
 
-# Entrada normal
-carro1_nome = st.text_input("Nome do carro 1", "Fiat Uno")
+carro1_nome = st.text_input("Nome do carro 1", "Fiat Uno", key="carro1_nome")
 carro1_valor_total = st.number_input("Valor total (€)", min_value=0.0, step=0.01, key="valor_total1")
 carro1_valor_pago = st.number_input("Valor já pago (€)", min_value=0.0, step=0.01, key="valor_pago1")
-st.success(f"Falta pagar: € {carro1_valor_total - carro1_valor_pago:.2f}")
+carro1_data_pagamento = st.date_input("Data do último pagamento", value=date.today(), key="data_pagamento1")
 
-st.subheader("Registrar parcelas já pagas")
+carro1_falta = carro1_valor_total - carro1_valor_pago
+st.success(f"Falta pagar: € {carro1_falta:.2f}")
+st.info(f"Último pagamento registrado: {carro1_data_pagamento.strftime('%d/%m/%Y')}")
 
-# Data e valor da parcela paga
-nova_data = st.date_input("📅 Data do pagamento", value=date.today())
-novo_valor = st.number_input("💰 Valor pago nesta data", min_value=0.0, step=0.01)
+st.markdown("---")
 
-# Lista de pagamentos
-if "pagamentos" not in st.session_state:
-    st.session_state["pagamentos"] = []
+# -------------------------
+# Carro 2 - Pagamento mensal
+# -------------------------
+st.header("Carro 2 - Pagamento mensal")
 
-if st.button("Registrar Pagamento"):
-    st.session_state["pagamentos"].append((str(nova_data), novo_valor))
-    st.success("Pagamento registrado!")
+carro2_nome = st.text_input("Nome do carro 2", "Opel Corsa", key="carro2_nome")
+carro2_valor_total = st.number_input("Valor total (€) do segundo carro", min_value=0.0, step=0.01, key="valor_total2")
+carro2_valor_pago = st.number_input("Valor já pago (€) do segundo carro", min_value=0.0, step=0.01, key="valor_pago2")
+carro2_data_pagamento = st.date_input("Data do último pagamento", value=date.today(), key="data_pagamento2")
 
-# Mostrar lista de pagamentos
-if st.session_state["pagamentos"]:
-    st.markdown("### 🔹 Pagamentos feitos:")
-    for data, valor in st.session_state["pagamentos"]:
-        st.write(f"• {data} - €{valor:.2f}")
+carro2_falta = carro2_valor_total - carro2_valor_pago
+st.success(f"Falta pagar: € {carro2_falta:.2f}")
+st.info(f"Último pagamento registrado: {carro2_data_pagamento.strftime('%d/%m/%Y')}")
+
+st.markdown("---")
