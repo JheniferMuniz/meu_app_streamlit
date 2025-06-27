@@ -14,16 +14,17 @@ def registrar_pagamento(carro_key, valor, data):
     st.session_state[carro_key].append((data.strftime("%d/%m/%Y"), f"€ {valor:.2f}"))
 
 # ======================
-# CARRO 1 - Semanal
+# CARRO 1 - TESLA (semanal)
 # ======================
-st.header("Carro 1 - Pagamento semanal")
+carro1_nome = "TESLA"
 
-carro1_nome = st.text_input("Nome do carro 1", "Fiat Uno")
-valor_total1 = st.number_input("Valor total (€)", min_value=0.0, step=100.0, key="total1")
+st.header(f"{carro1_nome} - Pagamento semanal")
+
+valor_total1 = st.number_input("Valor total do TESLA (€)", min_value=0.0, step=100.0, key="total1")
 valor_pago1 = st.number_input("Valor já pago (€)", min_value=0.0, step=50.0, key="pago1")
-data_pagamento1 = st.date_input("Data do último pagamento", value=date.today(), key="data1")
+data_pagamento1 = st.date_input("Data do último pagamento do TESLA", value=date.today(), key="data1")
 
-if st.button("Salvar pagamento do carro 1"):
+if st.button("Salvar pagamento do TESLA"):
     registrar_pagamento("historico1", valor_pago1, data_pagamento1)
     st.success("Pagamento salvo com sucesso!")
 
@@ -32,21 +33,24 @@ st.success(f"Falta pagar: € {falta_pagar1:.2f}")
 
 # Mostrar histórico de pagamentos do carro 1
 if "historico1" in st.session_state:
-    st.subheader("📋 Histórico de Pagamentos - Carro 1")
+    st.subheader(f"📋 Histórico de Pagamentos - {carro1_nome}")
     for data, valor in st.session_state["historico1"]:
         st.text(f"{data} — {valor}")
 
-# ======================
-# CARRO 2 - Mensal
-# ======================
-st.header("Carro 2 - Pagamento mensal")
+st.markdown("---")
 
-carro2_nome = st.text_input("Nome do carro 2", "Opel Corsa")
-valor_total2 = st.number_input("Valor total (€) do segundo carro", min_value=0.0, step=100.0, key="total2")
-valor_pago2 = st.number_input("Valor já pago (€) do segundo carro", min_value=0.0, step=50.0, key="pago2")
-data_pagamento2 = st.date_input("Data do último pagamento", value=date.today(), key="data2")
+# ======================
+# CARRO 2 - PEUGEOT 508 (mensal)
+# ======================
+carro2_nome = "PEUGEOT 508"
 
-if st.button("Salvar pagamento do carro 2"):
+st.header(f"{carro2_nome} - Pagamento mensal")
+
+valor_total2 = st.number_input("Valor total do PEUGEOT (€)", min_value=0.0, step=100.0, key="total2")
+valor_pago2 = st.number_input("Valor já pago (€)", min_value=0.0, step=50.0, key="pago2")
+data_pagamento2 = st.date_input("Data do último pagamento do PEUGEOT", value=date.today(), key="data2")
+
+if st.button("Salvar pagamento do PEUGEOT"):
     registrar_pagamento("historico2", valor_pago2, data_pagamento2)
     st.success("Pagamento salvo com sucesso!")
 
@@ -55,6 +59,6 @@ st.success(f"Falta pagar: € {falta_pagar2:.2f}")
 
 # Mostrar histórico de pagamentos do carro 2
 if "historico2" in st.session_state:
-    st.subheader("📋 Histórico de Pagamentos - Carro 2")
+    st.subheader(f"📋 Histórico de Pagamentos - {carro2_nome}")
     for data, valor in st.session_state["historico2"]:
         st.text(f"{data} — {valor}")
